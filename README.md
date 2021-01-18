@@ -13,7 +13,7 @@ version: '3'
 services:  
   collectd:
     container_name: qnap-collectd
-    image: zottelbeyer/qnap-collectd:latest
+    image: ghcr.io/needforspeed/qnap-collectd:latest
     privileged: true
     network_mode: host
     volumes:
