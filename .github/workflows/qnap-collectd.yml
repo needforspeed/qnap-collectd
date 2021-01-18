@@ -1,0 +1,34 @@
+name: qnap-collectd
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        uses: actions/checkout@v2
+
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.CR_PAT }}
+
+      - 
+        name: Publish to GitHub Packages
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          load: true
+          tags: |
+            ghcr.io/needforspeed/qnap-collectd:latest
+
+      -
+         run: |
+           docker push ghcr.io/needforspeed/qnap-collectd:latest
